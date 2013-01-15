@@ -38,6 +38,32 @@ namespace :ebook do
         end
       end
     end
-
+  end
+  
+  desc "Export an ebook to tea format"
+  task :export => [:environment] do
+    epub = Ebook::Epub.new(:file => File.open(ARGV[1]))
+    export_directory = ""
+    FileUtils.mkdir_p "export/#{epub.id.to_s}/components"
+    FileUtils.mkdir_p "db/epub/#{epub.id.to_s[0..11]}/#{epub.id.to_s[12..23]}"
+    begin
+      epub.extract
+    rescue Exception => e
+      pp e
+    end
+    puts "==> HTML"
+    begin
+      epub.convert_to_html
+    rescue Exception => e
+      pp e
+    end
+    File.open("export/#{epub.id.to_s}/meta.json", 'w') do |f|
+      f.write(epub.as_json(components: true, chapters: true).to_json)
+    end
+    epub.components.each do |component|
+      File.open("export/#{epub.id.to_s}/components/#{component.id.to_s}.json", 'w') do |f|
+        f.write(component.to_json)
+      end
+    end
   end
 end
