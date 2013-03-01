@@ -42,9 +42,8 @@ class App.Views.EbookReader extends Backbone.View
     App.messages.on 'receive:navigate', @navigate
 
   fetchPosition: =>
-    @model.set 'readingPosition', new App.Models.ReadingPosition
-      book_id: @model.id
-      user_id: App.current_user.id
+    @model.set('readingPosition', new App.Models.ReadingPosition(book_id: @model.id, user_id: App.current_user.id))
+      
     if locus = @locusFromParams()
       @model.get('readingPosition').set 'locus', locus
       @initializeReader()
