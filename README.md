@@ -29,6 +29,9 @@ TeaBook Open Reader
         * [Mongo](#mongo)
         * [Secret](#secret)
         * [Insert default datas in database](#insert-default-datas-in-database)
+        * [Start resque workers](#start-resque-workers)
+        * [Start web server (thin)](#start-web-server-thin)
+        * [Run the fake API](#run-the-fake-api)
     * [Installation with vagrant](#installation-with-vagrant)
     * [Specs](#specs)
 
